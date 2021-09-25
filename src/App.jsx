@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import ErrorMessage from './components/ErrorMessage'
+import BlogList from './components/BlogList'
 import blogsService from './services/blogs'
 import loginService from './services/login'
 
@@ -54,7 +54,6 @@ const App = () => {
   return (
     <div>
       <h2>Blogs App</h2>
-
       <ErrorMessage message={errorMessage} />
       {user === null
         ? <LoginForm
@@ -64,9 +63,7 @@ const App = () => {
             handlePasswordChange={handlePasswordChange}
             handleLogin={handleLogin}
           />
-        : blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
+        : <BlogList blogs={blogs} />}
     </div>
 
   )

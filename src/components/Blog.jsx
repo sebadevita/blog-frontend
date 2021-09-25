@@ -1,8 +1,9 @@
 import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
+const Blog = ({ title, author }) => (
+  <>
+    <p>{title}</p>
+    <p>{author}</p>
+  </>
 )
 
 export default Blog
