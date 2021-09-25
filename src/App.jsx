@@ -87,7 +87,21 @@ const App = () => {
 
   const createBlog = async (e) => {
     e.preventDefault()
-    console.log('Creando un BLOG!!!!')
+
+    const blogObject = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    }
+    try {
+      const newBlog = await blogsService.create(blogObject)
+      setBlogs(blogs.concat(newBlog))
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    } catch (error) {
+      setErrorMessage(error.response.data.error)
+    }
   }
 
   return (
