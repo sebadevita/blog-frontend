@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import ErrorMessage from './components/ErrorMessage'
+import SuccessMessage from './components/SuccessMesage'
 import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
 import blogsService from './services/blogs'
@@ -15,6 +16,7 @@ const App = () => {
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     async function fetchData () {
@@ -96,6 +98,13 @@ const App = () => {
     try {
       const newBlog = await blogsService.create(blogObject)
       setBlogs(blogs.concat(newBlog))
+
+      setSuccessMessage(`A new blog "${newTitle}" gonna need it! by ${newAuthor} added`)
+
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 4000)
+
       setNewTitle('')
       setNewAuthor('')
       setNewUrl('')
@@ -122,6 +131,7 @@ const App = () => {
 
             <h3>Logged user is: {user.username}</h3>
             <button onClick={handleLogout}>Logout</button>
+            <SuccessMessage message={successMessage} />
             <BlogForm
               createBlog={createBlog}
               newTitle={newTitle}
