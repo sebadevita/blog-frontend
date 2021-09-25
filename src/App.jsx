@@ -20,7 +20,16 @@ const App = () => {
     fetchData()
   }, [])
 
-  // TODO Consultar el tema de [c]
+  // TODO Consultar el tema de []
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogsService.setToken(user.token)
+    }
+  }, [])
 
   const handleUsernameChange = e => {
     setUsername(e.target.value)
@@ -37,6 +46,10 @@ const App = () => {
         username,
         password
       })
+
+      window.localStorage.setItem(
+        'loggedBlogAppUser', JSON.stringify(user)
+      )
 
       blogsService.setToken(user.token)
 
