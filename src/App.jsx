@@ -60,8 +60,13 @@ const App = () => {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 4000)
     }
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogAppUser')
+    setUser(null)
   }
 
   return (
@@ -76,7 +81,16 @@ const App = () => {
             handlePasswordChange={handlePasswordChange}
             handleLogin={handleLogin}
           />
-        : <BlogList blogs={blogs} />}
+        : (
+
+          <>
+
+            <h3>Logged user is: {user.username}</h3>
+            <button onClick={handleLogout}>Logout</button>
+            <BlogList blogs={blogs} />
+          </>
+          )}
+
     </div>
 
   )
