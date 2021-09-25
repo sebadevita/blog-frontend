@@ -14,11 +14,11 @@ const App = () => {
 
   useEffect(() => {
     async function fetchData () {
-      setBlogs(await blogsService.getAll())
+      setBlogs(await blogsService.getAll({}))
     }
 
     fetchData()
-  })
+  }, [])
 
   // TODO Consultar el tema de [c]
 
@@ -32,14 +32,14 @@ const App = () => {
 
   const handleLogin = async e => {
     e.preventDefault()
-    console.log('logging in with', username, password)
-
     try {
       const user = await loginService.login({
         username,
         password
       })
+
       blogsService.setToken(user.token)
+
       setUser(user)
       setUsername('')
       setPassword('')
