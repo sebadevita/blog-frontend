@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import ErrorMessage from './components/ErrorMessage'
 import BlogList from './components/BlogList'
+import BlogForm from './components/BlogForm'
 import blogsService from './services/blogs'
 import loginService from './services/login'
 
@@ -10,6 +11,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
@@ -37,6 +41,18 @@ const App = () => {
 
   const handlePasswordChange = e => {
     setPassword(e.target.value)
+  }
+
+  const handleTitleChange = e => {
+    setNewTitle(e.target.value)
+  }
+
+  const handleAuthorChange = e => {
+    setNewAuthor(e.target.value)
+  }
+
+  const handleUrlChange = e => {
+    setNewUrl(e.target.value)
   }
 
   const handleLogin = async e => {
@@ -69,6 +85,11 @@ const App = () => {
     setUser(null)
   }
 
+  const createBlog = async (e) => {
+    e.preventDefault()
+    console.log('Creando un BLOG!!!!')
+  }
+
   return (
     <div>
       <h2>Blogs App</h2>
@@ -87,6 +108,15 @@ const App = () => {
 
             <h3>Logged user is: {user.username}</h3>
             <button onClick={handleLogout}>Logout</button>
+            <BlogForm
+              createBlog={createBlog}
+              newTitle={newTitle}
+              newAuthor={newAuthor}
+              newUrl={newUrl}
+              handleTitleChange={handleTitleChange}
+              handleAuthorChange={handleAuthorChange}
+              handleUrlChange={handleUrlChange}
+            />
             <BlogList blogs={blogs} />
           </>
           )}
