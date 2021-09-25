@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
+import ErrorMessage from './components/ErrorMessage'
 import blogsService from './services/blogs'
 import loginService from './services/login'
 
@@ -17,7 +18,9 @@ const App = () => {
     }
 
     fetchData()
-  }, [])
+  })
+
+  // TODO Consultar el tema de [c]
 
   const handleUsernameChange = e => {
     setUsername(e.target.value)
@@ -51,7 +54,8 @@ const App = () => {
   return (
     <div>
       <h2>Blogs App</h2>
-      {errorMessage}
+
+      <ErrorMessage message={errorMessage} />
       {user === null
         ? <LoginForm
             username={username}
