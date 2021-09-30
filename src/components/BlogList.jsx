@@ -9,6 +9,7 @@ const BlogList = ({ blogs }) => {
           key={blog.id}
           title={blog.title}
           author={blog.author}
+          likes={blog.likes}
         />
       )
       )}
