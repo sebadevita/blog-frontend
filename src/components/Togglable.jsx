@@ -16,7 +16,7 @@ export const Togglable = ({ children, buttonLabel }) => {
       </div>
       <div style={showWhenVisible}>
         {children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <button onClick={toggleVisibility}>Cancel</button>
       </div>
     </>
   )

@@ -13,9 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
@@ -44,18 +41,6 @@ const App = () => {
 
   const handlePasswordChange = e => {
     setPassword(e.target.value)
-  }
-
-  const handleTitleChange = e => {
-    setNewTitle(e.target.value)
-  }
-
-  const handleAuthorChange = e => {
-    setNewAuthor(e.target.value)
-  }
-
-  const handleUrlChange = e => {
-    setNewUrl(e.target.value)
   }
 
   const handleLogin = async e => {
@@ -88,27 +73,16 @@ const App = () => {
     setUser(null)
   }
 
-  const createBlog = async (e) => {
-    e.preventDefault()
-
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
+  const createBlog = async (blogObject) => {
     try {
       const newBlog = await blogsService.create(blogObject)
       setBlogs(blogs.concat(newBlog))
 
-      setSuccessMessage(`A new blog "${newTitle}" gonna need it! by ${newAuthor} added`)
+      setSuccessMessage(`A new blog "${newBlog.title}" gonna need it! by ${newBlog.author} added`)
 
       setTimeout(() => {
         setSuccessMessage(null)
       }, 4000)
-
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
     } catch (error) {
       setErrorMessage(error.response.data.error)
     }
@@ -137,12 +111,6 @@ const App = () => {
 
               <BlogForm
                 createBlog={createBlog}
-                newTitle={newTitle}
-                newAuthor={newAuthor}
-                newUrl={newUrl}
-                handleTitleChange={handleTitleChange}
-                handleAuthorChange={handleAuthorChange}
-                handleUrlChange={handleUrlChange}
               />
             </Togglable>
             <BlogList blogs={blogs} />
