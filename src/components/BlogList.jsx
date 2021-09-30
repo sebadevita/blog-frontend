@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './Blog.jsx'
+import '../styles/blog.css'
 
 const BlogList = ({ blogs }) => {
   return (
