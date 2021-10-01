@@ -2,18 +2,22 @@ import React, { useState } from 'react'
 import '../styles/blog.css'
 import '../styles/successMessage.css'
 
-const Blog = ({ title, author, likes, url }) => {
+const Blog = ({ blog }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleDetails = () => {
     setShowDetails(!showDetails)
-    console.log(showDetails)
+  }
+
+  const addLike = () => {
+    blog.likes++
+    console.log(blog.likes)
   }
 
   return (
     <div className='blog'>
       <div>
-        {title}
+        {blog.title}
         <button style={{ marginLeft: 10 }} onClick={toggleDetails}>{showDetails ? 'hide' : 'view'}</button>
 
       </div>
@@ -21,15 +25,16 @@ const Blog = ({ title, author, likes, url }) => {
       {showDetails === true
         ? (
           <div>
-            <p>{author}</p>
+            <p>{blog.author}</p>
 
-            <p>Likes {likes}
-              <button>like</button>
+            <p>
+              Likes {blog.likes}
+              <button onClick={addLike}>like</button>
             </p>
 
-            <p>{url}</p>
+            <p>{blog.url}</p>
           </div>)
-        : <></>}
+        : null}
 
     </div>
   )
