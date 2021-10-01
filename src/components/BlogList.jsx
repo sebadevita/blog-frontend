@@ -11,6 +11,7 @@ const BlogList = ({ blogs }) => {
           title={blog.title}
           author={blog.author}
           likes={blog.likes}
+          url={blog.url}
         />
       )
       )}
