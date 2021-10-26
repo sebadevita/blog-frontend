@@ -14,7 +14,7 @@ const BlogList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [blogs])
 
   const getAllBlogs = async () => {
     const blogs = await blogsService.getAll({})
@@ -26,8 +26,6 @@ const BlogList = () => {
   const updateBlog = async (blogId, blogObject) => {
     try {
       await blogsService.updateBlog(blogId, blogObject)
-      getAllBlogs()
-      // TODO Consultar
     } catch (error) {
       setErrorMessage(error.response.data.error)
       setTimeout(() => {
@@ -37,6 +35,18 @@ const BlogList = () => {
   }
 
   // TODO Consultar el tema de []
+
+  const removeBlog = async (blogId) => {
+    try {
+      await blogsService.deleteBlog(blogId)
+    } catch (error) {
+      setErrorMessage(error.response.data.error)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 4000)
+    }
+  }
+
   return (
     <>
       <ErrorMessage message={errorMessage} />
@@ -45,6 +55,7 @@ const BlogList = () => {
           key={blog.id}
           blog={blog}
           updateBlog={updateBlog}
+          deleteBlog={removeBlog}
         />
       )
       )}

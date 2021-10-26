@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../styles/blog.css'
 import '../styles/successMessage.css'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleDetails = () => {
@@ -12,6 +12,10 @@ const Blog = ({ blog, updateBlog }) => {
   const addLike = () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
     updateBlog(blog.id, updatedBlog)
+  }
+
+  const removeBlog = () => {
+    deleteBlog(blog.id)
   }
 
   return (
@@ -33,6 +37,7 @@ const Blog = ({ blog, updateBlog }) => {
             </p>
 
             <p>{blog.url}</p>
+            <button onClick={removeBlog}>remove</button>
           </div>)
         : null}
 

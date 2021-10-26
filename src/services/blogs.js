@@ -31,11 +31,19 @@ const updateBlog = async (idBlog, blog) => {
   return await axios.put(BASE_URL + idBlog, blog, config)
 }
 
+const deleteBlog = async (idBlog) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  return await axios.delete(BASE_URL + idBlog, config)
+}
+
 const exportedFunctions = {
   setToken,
   getAll,
   create,
-  updateBlog
+  updateBlog,
+  deleteBlog
 }
 
 export default exportedFunctions
