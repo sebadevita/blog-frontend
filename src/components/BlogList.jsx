@@ -30,12 +30,22 @@ const BlogList = ({ blogs, setBlogs, showErrorMessage }) => {
   }
 
   const removeBlog = async (blogId) => {
-    try {
-      await blogsService.deleteBlog(blogId)
-      getAllBlogs()
-    } catch (error) {
-      showErrorMessage(error.response.data.error)
+    if (confirmDelete(blogId)) {
+      try {
+        await blogsService.deleteBlog(blogId)
+        getAllBlogs()
+      } catch (error) {
+        showErrorMessage(error.response.data.error)
+      }
     }
+  }
+  const confirmDelete = (idBlog) => {
+    const { title, author } = findById(idBlog)
+    return (window.confirm(`Remove blog "${title}" by ${author}?`))
+  }
+
+  const findById = (idBlog) => {
+    return blogs.find((blog) => blog.id === idBlog)
   }
 
   return (

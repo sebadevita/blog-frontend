@@ -23,7 +23,7 @@ const BlogForm = ({ blogs, setBlogs, showErrorMessage, showSuccessMessage }) => 
       const newBlog = await blogsService.create(blogObject)
       setBlogs(blogs.concat(newBlog))
 
-      showSuccessMessage(`A new blog "${newBlog.title}" gonna need it! by ${newBlog.author} added`)
+      showSuccessMessage(`A new blog "${newBlog.title}" by ${newBlog.author} added`)
     } catch (error) {
       showErrorMessage(error.response.data.error)
     }
