@@ -17,16 +17,6 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
-    async function fetchData () {
-      setBlogs(await blogsService.getAll({}))
-    }
-
-    fetchData()
-  }, [])
-
-  // TODO Consultar el tema de []
-
-  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -89,7 +79,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <h2>Blogs App</h2>
       <ErrorMessage message={errorMessage} />
       {user === null
@@ -113,11 +103,11 @@ const App = () => {
                 createBlog={createBlog}
               />
             </Togglable>
-            <BlogList blogs={blogs} />
+            <BlogList />
           </>
           )}
 
-    </div>
+    </>
 
   )
 }
