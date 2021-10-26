@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import blogsService from '../services/blogs'
 import Blog from './Blog.jsx'
-import ErrorMessage from './ErrorMessage'
 import '../styles/blog.css'
 
-const BlogList = () => {
-  const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
+const BlogList = ({ blogs, setBlogs, showErrorMessage }) => {
+  const getAllBlogs = useCallback(
+    async () => {
+      const blogs = await blogsService.getAll({})
+
+      blogs.sort((a, b) => (a.likes < b.likes) ? 1 : -1)
+      setBlogs(blogs)
+    }, [setBlogs])
 
   useEffect(() => {
     async function fetchData () {
@@ -14,42 +18,28 @@ const BlogList = () => {
     }
 
     fetchData()
-  }, [blogs])
-
-  const getAllBlogs = async () => {
-    const blogs = await blogsService.getAll({})
-
-    blogs.sort((a, b) => (a.likes < b.likes) ? 1 : -1)
-    setBlogs(blogs)
-  }
+  }, [getAllBlogs])
 
   const updateBlog = async (blogId, blogObject) => {
     try {
       await blogsService.updateBlog(blogId, blogObject)
+      getAllBlogs()
     } catch (error) {
-      setErrorMessage(error.response.data.error)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 4000)
+      showErrorMessage(error.response.data.error)
     }
   }
-
-  // TODO Consultar el tema de []
 
   const removeBlog = async (blogId) => {
     try {
       await blogsService.deleteBlog(blogId)
+      getAllBlogs()
     } catch (error) {
-      setErrorMessage(error.response.data.error)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 4000)
+      showErrorMessage(error.response.data.error)
     }
   }
 
   return (
     <>
-      <ErrorMessage message={errorMessage} />
       {blogs.map((blog) => (
         <Blog
           key={blog.id}

@@ -63,19 +63,14 @@ const App = () => {
     setUser(null)
   }
 
-  const createBlog = async (blogObject) => {
-    try {
-      const newBlog = await blogsService.create(blogObject)
-      setBlogs(blogs.concat(newBlog))
+  const showErrorMessage = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => setErrorMessage(null), 2500)
+  }
 
-      setSuccessMessage(`A new blog "${newBlog.title}" gonna need it! by ${newBlog.author} added`)
-
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 4000)
-    } catch (error) {
-      setErrorMessage(error.response.data.error)
-    }
+  const showSuccessMessage = (message) => {
+    setSuccessMessage(message)
+    setTimeout(() => setSuccessMessage(null), 2500)
   }
 
   return (
@@ -98,12 +93,19 @@ const App = () => {
             <button onClick={handleLogout}>Logout</button>
             <SuccessMessage message={successMessage} />
             <Togglable buttonLabel='Create new blog'>
-
               <BlogForm
-                createBlog={createBlog}
+                blogs={blogs}
+                setBlogs={setBlogs}
+                showErrorMessage={showErrorMessage}
+                showSuccessMessage={showSuccessMessage}
               />
             </Togglable>
-            <BlogList />
+
+            <BlogList
+              blogs={blogs}
+              setBlogs={setBlogs}
+              showErrorMessage={showErrorMessage}
+            />
           </>
           )}
 
