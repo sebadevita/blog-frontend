@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import '../styles/blog.css'
 import '../styles/successMessage.css'
 
@@ -43,6 +44,12 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  updateBlog: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired
 }
 
 export default Blog

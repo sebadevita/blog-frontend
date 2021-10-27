@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import '../styles/successMessage.css'
+
 const SuccessMessage = ({ message }) => {
-  if (message === null) {
+  if (message === null || message === '') {
     return null
   }
 
@@ -10,6 +12,10 @@ const SuccessMessage = ({ message }) => {
       {message}
     </p>
   )
+}
+
+SuccessMessage.propTypes = {
+  message: PropTypes.string.isRequired
 }
 
 export default SuccessMessage

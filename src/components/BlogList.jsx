@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
+import PropTypes from 'prop-types'
 import blogsService from '../services/blogs'
 import Blog from './Blog.jsx'
 import '../styles/blog.css'
@@ -61,6 +62,11 @@ const BlogList = ({ blogs, setBlogs, showErrorMessage }) => {
       )}
     </>
   )
+}
+
+BlogList.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  setBlogs: PropTypes.func.isRequired
 }
 
 export default BlogList

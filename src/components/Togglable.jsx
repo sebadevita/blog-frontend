@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 export const Togglable = ({ children, buttonLabel }) => {
   const [visible, setVisible] = useState(false)
@@ -20,4 +21,8 @@ export const Togglable = ({ children, buttonLabel }) => {
       </div>
     </>
   )
+}
+
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired
 }
