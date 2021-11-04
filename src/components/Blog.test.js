@@ -50,3 +50,27 @@ test('number of likes and url is not shown if the view button is not clicked', (
 
   expect(component.container).not.toHaveTextContent('10', 'blogs.com')
 })
+
+test('if button like is clicked twice, the event handler is called twice', () => {
+  const blog = {
+    title: 'Blog test',
+    author: 'sebita',
+    likes: 10,
+    url: 'blogs.com'
+  }
+
+  const mockHandler = jest.fn()
+
+  const component = render(
+    <Blog blog={blog} updateBlog={mockHandler} />
+  )
+
+  const button = component.getByText('view')
+  fireEvent.click(button)
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
