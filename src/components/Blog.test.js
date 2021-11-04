@@ -1,0 +1,52 @@
+import React from 'react'
+import '@testing-library/jest-dom/extend-expect'
+import { render, fireEvent, prettyDOM } from '@testing-library/react'
+
+import Blog from './Blog'
+
+test('renders blog test and author', () => {
+  const blog = {
+    title: 'Blog test',
+    author: 'sebita'
+  }
+
+  const component = render(
+    <Blog blog={blog} />
+  )
+
+  expect(component.container).toHaveTextContent(
+    'Blog test'
+  )
+})
+
+test('number of likes and url is shown when the view button is clicked', () => {
+  const blog = {
+    title: 'Blog test',
+    author: 'sebita',
+    likes: 10,
+    url: 'blogs.com'
+  }
+
+  const component = render(
+    <Blog blog={blog} />
+  )
+
+  const button = component.getByText('view')
+  fireEvent.click(button)
+  expect(component.container).toHaveTextContent('10', 'blogs.com')
+})
+
+test('number of likes and url is not shown if the view button is not clicked', () => {
+  const blog = {
+    title: 'Blog test',
+    author: 'sebita',
+    likes: 10,
+    url: 'blogs.com'
+  }
+
+  const component = render(
+    <Blog blog={blog} />
+  )
+
+  expect(component.container).not.toHaveTextContent('10', 'blogs.com')
+})
